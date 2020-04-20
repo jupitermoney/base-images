@@ -10,7 +10,6 @@ on:
 
 jobs:
   push:
-    needs: build
     name: Package all services and push them to ECR
     runs-on: ubuntu-latest
 
