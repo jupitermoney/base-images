@@ -32,9 +32,9 @@ jobs:
           registries: "351409330128"
       - uses: lots0logs/gh-action-get-changed-files@2.0.6
         with:
-          token: GITHUB_TOKEN
+          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Atlantis
-        run: cat files.json
+        run: ls && cat files.json
       - name: Logout of Amazon ECR
         if: always()
         run: docker logout $ECR_REGISTRY
