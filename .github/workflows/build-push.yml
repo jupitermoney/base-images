@@ -32,8 +32,9 @@ jobs:
       - uses: lots0logs/gh-action-get-changed-files@2.0.6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+      - run: echo ::set-env services=(cat ${HOME}/files_modified.json | jq -r ".[]" | cut -d '/' -f 1 | uniq  )
       - name: Atlantis
-        if : grep -q atlantis "${HOME}/files_modified.json"
+        if : contains($services,"atlantis")
         run: |
           docker build -f atlantis/Dockerfile -t $ECR_REGISTRY/atlantis:$GITHUB_REF_SLUG-$GITHUB_SHA_SHORT
           docker push $ECR_REGISTRY/atlantis:$GITHUB_REF_SLUG-$GITHUB_SHA_SHORT
