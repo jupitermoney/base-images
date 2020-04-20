@@ -15,11 +15,10 @@ jobs:
 
     env:
       ECR_REGISTRY: 351409330128.dkr.ecr.ap-south-1.amazonaws.com
-      CI_COMMIT_SHA: ${{ github.sha }}
 
     steps:
-      - run: echo ::set-env name=CI_COMMIT_REF_NAME::$(echo $GITHUB_REF | cut -d '/' -f 3)
       - uses: actions/checkout@v2
+      - uses: rlespinasse/github-slug-action@master
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1.0.1
         with:
@@ -34,7 +33,10 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Atlantis
-        run: cat ${HOME}/files_modified.json
+        if : grep -q atlantis "${HOME}/files_modified.json"
+        run: |
+          docker build -f atlantis/Dockerfile -t $ECR_REGISTRY/atlantis:$GITHUB_REF_SLUG-$GITHUB_SHA_SHORT
+          docker push $ECR_REGISTRY/atlantis:$GITHUB_REF_SLUG-$GITHUB_SHA_SHORT
       - name: Logout of Amazon ECR
         if: always()
         run: docker logout $ECR_REGISTRY
