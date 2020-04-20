@@ -33,8 +33,9 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
       - run: echo ::set-env services=(cat ${HOME}/files_modified.json | jq -r ".[]" | cut -d '/' -f 1 | uniq  )
+      - run: echo ${{env.services}}
       - name: Atlantis
-        if : contains($services,"atlantis")
+        if : contains(${{env.services}},"atlantis")
         run: |
           docker build -f atlantis/Dockerfile -t $ECR_REGISTRY/atlantis:$GITHUB_REF_SLUG-$GITHUB_SHA_SHORT
           docker push $ECR_REGISTRY/atlantis:$GITHUB_REF_SLUG-$GITHUB_SHA_SHORT

@@ -2,7 +2,6 @@ FROM runatlantis/atlantis:latest
 
 ARG TF_COMPLIANCE_VERSION=1.1.16
 
-
 RUN apk add --no-cache python3 && \
     ln -s /usr/bin/python3 /usr/bin/python && \
     python3 -m ensurepip && \
