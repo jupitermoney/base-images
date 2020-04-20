@@ -6,8 +6,8 @@ RUN apk add --no-cache gcc build-base python3 \
     libxml2 libxslt-dev && \
     ln -s /usr/bin/python3 /usr/bin/python && \
     python3 -m ensurepip && \
-    rm -r /usr/lib/python*/ensurepip
-RUN pip3 install --no-cache --upgrade pip setuptools wheel && \
+    rm -r /usr/lib/python*/ensurepip && \
+    pip3 install --no-cache --upgrade pip setuptools wheel && \
     pip install terraform-compliance==${TF_COMPLIANCE_VERSION} && \
     pip uninstall -y radish radish-bdd && \
     pip install radish radish-bdd && \
@@ -15,7 +15,7 @@ RUN pip3 install --no-cache --upgrade pip setuptools wheel && \
 
 ENV LOCAL_BIN=/usr/local/bin
 
-ARG TERRAGRUNT_VERSION="v0.22.10"
+ARG TERRAGRUNT_VERSION="v0.23.10"
 ADD https://github.com/gruntwork-io/terragrunt/releases/download/${TERRAGRUNT_VERSION}/terragrunt_linux_amd64 $LOCAL_BIN/terragrunt
 RUN chmod +x $LOCAL_BIN/terragrunt
 
