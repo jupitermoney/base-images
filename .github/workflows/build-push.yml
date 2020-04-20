@@ -32,12 +32,12 @@ jobs:
       - uses: lots0logs/gh-action-get-changed-files@2.0.6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-      - run: echo ::set-env services=$(cat ${HOME}/files_modified.json | jq -r ".[]" | cut -d '/' -f 1 | uniq  )
-      - run: echo ${{env.services}}
+      - run: echo ::set-env name=SERVICES::$(cat ${HOME}/files_modified.json | jq -r ".[]" | cut -d '/' -f 1 | uniq  )
+      - run: echo ${{env.SERVICES}}
       - name: Atlantis
-        if : contains(${{env.services}},"atlantis")
+        if : contains(${{env.SERVICES}},"atlantis")
         run: |
-          docker build -f atlantis/Dockerfile -t $ECR_REGISTRY/atlantis:$GITHUB_REF_SLUG-$GITHUB_SHA_SHORT
+          docker build -f atlantis/Dockerfile -t $ECR_REGISTRY/atlantis:$GITHUB_REF_SLUG-$GITHUB_SHA_SHORT atlantis/
           docker push $ECR_REGISTRY/atlantis:$GITHUB_REF_SLUG-$GITHUB_SHA_SHORT
       - name: Logout of Amazon ECR
         if: always()
