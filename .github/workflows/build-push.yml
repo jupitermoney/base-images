@@ -34,7 +34,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Atlantis
-        run: ls && cat files.json
+        run: cat ${HOME}/files_modified.json
       - name: Logout of Amazon ECR
         if: always()
         run: docker logout $ECR_REGISTRY
