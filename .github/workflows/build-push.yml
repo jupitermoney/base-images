@@ -1,0 +1,41 @@
+name: Pushing base images to audit ecr.
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  push:
+    needs: build
+    name: Package all services and push them to ECR
+    runs-on: ubuntu-latest
+
+    env:
+      ECR_REGISTRY: 351409330128.dkr.ecr.ap-south-1.amazonaws.com
+      CI_COMMIT_SHA: ${{ github.sha }}
+
+    steps:
+      - run: echo ::set-env name=CI_COMMIT_REF_NAME::$(echo $GITHUB_REF | cut -d '/' -f 3)
+      - uses: actions/checkout@v2
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1.0.1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-south-1
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v1
+        with:
+          registries: "351409330128"
+      - uses: lots0logs/gh-action-get-changed-files@2.0.6
+        with:
+          token: GITHUB_TOKEN
+      - name: Atlantis
+        run: cat files.json
+      - name: Logout of Amazon ECR
+        if: always()
+        run: docker logout $ECR_REGISTRY
