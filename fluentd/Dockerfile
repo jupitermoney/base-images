@@ -1,5 +1,6 @@
 FROM fluent/fluentd:v1.10-debian-1
 
+
 # Use root account to use apt
 USER root
 
