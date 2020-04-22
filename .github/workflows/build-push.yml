@@ -38,6 +38,11 @@ jobs:
         run: |
           docker build -f atlantis/Dockerfile -t $ECR_REGISTRY/atlantis:$GITHUB_REF_SLUG-$GITHUB_SHA_SHORT atlantis/
           docker push $ECR_REGISTRY/atlantis:$GITHUB_REF_SLUG-$GITHUB_SHA_SHORT
+      - name: Atlantis
+        if: contains(env.SERVICES,'fluentd')
+        run: |
+          docker build -f fluentd/Dockerfile -t $ECR_REGISTRY/fluentd:$GITHUB_REF_SLUG-$GITHUB_SHA_SHORT fluentd/
+          docker push $ECR_REGISTRY/fluentd:$GITHUB_REF_SLUG-$GITHUB_SHA_SHORT
       - name: Logout of Amazon ECR
         if: always()
         run: docker logout $ECR_REGISTRY
