@@ -18,7 +18,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - uses: rlespinasse/github-slug-action@master
+      - uses: rlespinasse/github-slug-action@v2.x
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1.0.1
         with:
@@ -29,10 +29,11 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1
         with:
           registries: "351409330128"
-      - uses: lots0logs/gh-action-get-changed-files@2.0.6
+      - uses: futuratrepadeira/changed-files@v3.2.1
+        id: changed_files
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-      - run: echo ::set-env name=SERVICES::$(cat ${HOME}/files_modified.json | jq -r ".[]" | cut -d '/' -f 1 | uniq  )
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - run: echo ::set-env name=SERVICES::$(echo ${{ steps.changed_files.outputs.files_updated }} | tr " " "\n" | cut -d '/' -f 1 | uniq  )
       - name: Atlantis
         if : contains(env.SERVICES,'atlantis')
         run: |

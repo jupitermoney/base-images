@@ -21,6 +21,9 @@ RUN buildDeps="sudo make gcc g++ libc-dev" \
  && sudo gem install fluent-plugin-concat \
  && sudo gem install fluent-plugin-kinesis \
  && sudo gem install fluent-plugin-cloudwatch-logs \
+ && sudo gem install fluent-plugin-dedot_filter \
+ && sudo gem install fluent-plugin-elasticsearch \
+ && sudo gem install fluent-plugin-aws-elasticsearch-service \
  && sudo gem sources --clear-all \
  && SUDO_FORCE_REMOVE=yes \
     apt-get purge -y --auto-remove \
