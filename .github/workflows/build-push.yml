@@ -1,9 +1,6 @@
 name: Pushing base images to audit ecr.
 
 on:
-  push:
-    branches:
-      - master
   pull_request:
     branches:
       - master
