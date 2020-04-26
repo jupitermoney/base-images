@@ -1,0 +1,45 @@
+name: Pushing base images to management ecr
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  push:
+    name: Package all services and push them to ECR
+    runs-on: ubuntu-latest
+
+    env:
+      ECR_REGISTRY: 351409330128.dkr.ecr.ap-south-1.amazonaws.com
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: rlespinasse/github-slug-action@v2.x
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1.0.1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-south-1
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v1
+        with:
+          registries: "351409330128"
+      - uses: lots0logs/gh-action-get-changed-files@2.0.6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - run: echo ::set-env name=SERVICES::$(cat ${HOME}/files_modified.json | jq -r ".[]" | cut -d '/' -f 1 | uniq  )
+      - name: Atlantis
+        if : contains(env.SERVICES,'atlantis')
+        run: |
+          docker build -f atlantis/Dockerfile -t $ECR_REGISTRY/atlantis:$GITHUB_REF_SLUG-$GITHUB_SHA_SHORT atlantis/
+          docker push $ECR_REGISTRY/atlantis:$GITHUB_REF_SLUG-$GITHUB_SHA_SHORT
+      - name: Fluentd
+        if: contains(env.SERVICES,'fluentd')
+        run: |
+          docker build -f fluentd/Dockerfile -t $ECR_REGISTRY/fluentd:$GITHUB_REF_SLUG-$GITHUB_SHA_SHORT fluentd/
+          docker push $ECR_REGISTRY/fluentd:$GITHUB_REF_SLUG-$GITHUB_SHA_SHORT
+      - name: Logout of Amazon ECR
+        if: always()
+        run: docker logout $ECR_REGISTRY
