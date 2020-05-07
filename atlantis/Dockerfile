@@ -1,5 +1,6 @@
 FROM runatlantis/atlantis:latest
 
+
 ARG TF_COMPLIANCE_VERSION=1.1.16
 RUN apk add --no-cache jq gcc build-base python3 \
     python3-dev libxml2-dev   \
