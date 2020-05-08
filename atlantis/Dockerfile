@@ -15,7 +15,7 @@ RUN apk add --no-cache jq gcc build-base python3 \
 
 ENV LOCAL_BIN=/usr/local/bin
 
-ARG TERRAGRUNT_VERSION="v0.23.10"
+ARG TERRAGRUNT_VERSION="v0.23.14"
 ADD https://github.com/gruntwork-io/terragrunt/releases/download/${TERRAGRUNT_VERSION}/terragrunt_linux_amd64 $LOCAL_BIN/terragrunt
 RUN chmod +x $LOCAL_BIN/terragrunt
 
