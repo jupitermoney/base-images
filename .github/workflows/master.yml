@@ -40,6 +40,11 @@ jobs:
         run: |
           docker build -f fluentd/Dockerfile -t $ECR_REGISTRY/fluentd:$GITHUB_REF_SLUG-$GITHUB_SHA_SHORT fluentd/
           docker push $ECR_REGISTRY/fluentd:$GITHUB_REF_SLUG-$GITHUB_SHA_SHORT
+      - name: SSM
+        if: contains(env.SERVICES,'ssm')
+        run: |
+          docker build -f ssm/Dockerfile -t $ECR_REGISTRY/ssm-agent:$GITHUB_REF_SLUG-$GITHUB_SHA_SHORT ssm/
+          docker push $ECR_REGISTRY/ssm-agent:$GITHUB_REF_SLUG-$GITHUB_SHA_SHORT
       - name: Logout of Amazon ECR
         if: always()
         run: docker logout $ECR_REGISTRY
