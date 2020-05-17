@@ -22,6 +22,7 @@ RUN buildDeps="sudo make gcc g++ libc-dev" \
  && sudo gem install fluent-plugin-dedot_filter \
  && sudo gem install fluent-plugin-elasticsearch \
  && sudo gem install fluent-plugin-aws-elasticsearch-service \
+ && sudo gem install elasticsearch-xpack \
  && sudo gem install fluent-plugin-split-array \
  && sudo gem sources --clear-all \
  && SUDO_FORCE_REMOVE=yes \
