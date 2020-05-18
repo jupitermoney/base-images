@@ -14,8 +14,6 @@ RUN apk add --no-cache jq gcc build-base python3 \
     pip uninstall -y radish radish-bdd && \
     pip install radish radish-bdd && \
     curl -LOs https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_linux_amd64.zip && \
-    curl -LOs https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_SHA256SUMS && \
-    sed -n "/terraform_${VERSION}_linux_amd64.zip/p" terraform_${TF_VERSION}_SHA256SUMS | sha256sum -c && \
     unzip terraform_${TF_VERSION}_linux_amd64.zip -d /usr/local/bin/tf/versions/${TF_VERSION} && \
     ln -s /usr/local/bin/tf/versions/${TF_VERSION}/terraform /usr/local/bin/terraform${TF_VERSION} && \
     rm terraform_${TF_VERSION}_linux_amd64.zip && \
