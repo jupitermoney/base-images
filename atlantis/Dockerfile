@@ -17,6 +17,7 @@ RUN apk add --no-cache jq gcc build-base python3 \
     unzip terraform_${TF_VERSION}_linux_amd64.zip -d /usr/local/bin/tf/versions/${TF_VERSION} && \
     ln -s /usr/local/bin/tf/versions/${TF_VERSION}/terraform /usr/local/bin/terraform${TF_VERSION} && \
     rm terraform_${TF_VERSION}_linux_amd64.zip && \
+    rm -f /usr/local/bin/terraform && \
     ln -s /usr/local/bin/tf/versions/${TF_VERSION}/terraform /usr/local/bin/terraform && \
     mkdir -p /target
 
