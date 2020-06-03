@@ -1,6 +1,6 @@
 FROM runatlantis/atlantis:latest
 
-ARG TF_VERSION=0.12.25
+ARG TF_VERSION=0.12.26
 
 ARG TF_COMPLIANCE_VERSION=1.1.16
 RUN apk add --no-cache jq gcc build-base python3 \
@@ -16,12 +16,12 @@ RUN apk add --no-cache jq gcc build-base python3 \
     curl -LOs https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_linux_amd64.zip && \
     curl -LOs https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_SHA256SUMS && \
     sed -n "/terraform_${TF_VERSION}_linux_amd64.zip/p" terraform_${TF_VERSION}_SHA256SUMS | sha256sum -c && \
-    unzip terraform_${TF_VERSION}_linux_amd64.zip -d /usr/local/bin/tf/versions/${TF_VERSION} && \
-    ln -s /usr/local/bin/tf/versions/${TF_VERSION}/terraform /usr/local/bin/terraform${TF_VERSION} && \
+    unzip -o terraform_${TF_VERSION}_linux_amd64.zip -d /usr/local/bin/tf/versions/${TF_VERSION} && \
+    ln -s /usr/local/bin/tf/versions/${TF_VERSION}/terraform /usr/local/bin/terraform${TF_VERSION} | true && \
     rm terraform_${TF_VERSION}_linux_amd64.zip && \
     rm -f /usr/local/bin/terraform && \
     rm terraform_${TF_VERSION}_SHA256SUMS && \
-    ln -s /usr/local/bin/tf/versions/${TF_VERSION}/terraform /usr/local/bin/terraform && \
+    ln -s /usr/local/bin/tf/versions/${TF_VERSION}/terraform /usr/local/bin/terraform | true && \
     mkdir -p /target
 
 ENV LOCAL_BIN=/usr/local/bin
