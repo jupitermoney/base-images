@@ -17,7 +17,7 @@ RUN apk add --no-cache jq gcc build-base python3 \
     curl -LOs https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_SHA256SUMS && \
     sed -n "/terraform_${TF_VERSION}_linux_amd64.zip/p" terraform_${TF_VERSION}_SHA256SUMS | sha256sum -c && \
     unzip -o terraform_${TF_VERSION}_linux_amd64.zip -d /usr/local/bin/tf/versions/${TF_VERSION} && \
-    ln -s -f /usr/local/bin/tf/versions/${TF_VERSION}/terraform /usr/local/bin/terraform${TF_VERSION} && \
+    ln -s /usr/local/bin/tf/versions/${TF_VERSION}/terraform /usr/local/bin/terraform${TF_VERSION} && \
     rm terraform_${TF_VERSION}_linux_amd64.zip && \
     rm -f /usr/local/bin/terraform && \
     rm terraform_${TF_VERSION}_SHA256SUMS && \
