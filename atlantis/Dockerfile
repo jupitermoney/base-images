@@ -1,6 +1,6 @@
 FROM runatlantis/atlantis:latest
 
-ARG TF_VERSION=0.12.25
+ARG TF_VERSION=0.12.26
 
 ARG TF_COMPLIANCE_VERSION=1.1.16
 RUN apk add --no-cache jq gcc build-base python3 \
