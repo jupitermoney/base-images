@@ -24,6 +24,7 @@ RUN buildDeps="sudo make gcc g++ libc-dev" \
  && sudo gem install fluent-plugin-aws-elasticsearch-service \
  && sudo gem install elasticsearch-xpack \
  && sudo gem install fluent-plugin-split-array \
+ && sudo gem install fluent-plugin-coralogix \
  && sudo gem sources --clear-all \
  && SUDO_FORCE_REMOVE=yes \
     apt-get purge -y --auto-remove \
