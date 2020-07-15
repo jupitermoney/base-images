@@ -12,5 +12,5 @@ RUN wget -q https://raw.githubusercontent.com/coralogix/integrations-docs/master
 FROM amazon/aws-for-fluent-bit:latest
 LABEL Description="Special Fluent-Bit image for Coralogix integration" Vendor="Coralogix Inc." Version="1.0.0"
 COPY --from=builder /lib/libc.musl-x86_64.so* /lib/x86_64-linux-gnu/
-COPY --from=builder /go/src/app/plugi   ns.conf /fluent-bit/etc/
+COPY --from=builder /go/src/app/plugins.conf /fluent-bit/etc/
 COPY --from=builder /go/src/app/out_coralogix.so /fluent-bit/plugins/
