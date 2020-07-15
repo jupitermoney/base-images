@@ -15,3 +15,12 @@ LABEL Description="Special Fluent-Bit image for Coralogix integration" Vendor="C
 COPY --from=builder /lib/libc.musl-x86_64.so* /lib/x86_64-linux-gnu/
 COPY --from=builder /go/src/app/plugins.conf /fluent-bit/etc/
 COPY --from=builder /go/src/app/out_coralogix.so /fluent-bit/
+
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+# Optional Metrics endpoint
+EXPOSE 2020
+
+# Entry point
+CMD /entrypoint.sh
