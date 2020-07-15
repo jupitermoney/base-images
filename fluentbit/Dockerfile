@@ -1,4 +1,4 @@
-# Version 1.0.1
+# Version 1.0.2
 FROM golang:alpine AS builder
 RUN apk add --no-cache gcc libc-dev git
 WORKDIR /go/src/app
