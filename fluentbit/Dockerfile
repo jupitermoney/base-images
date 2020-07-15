@@ -19,8 +19,3 @@ COPY --from=builder /go/src/app/out_coralogix.so /fluent-bit/
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
-# Optional Metrics endpoint
-EXPOSE 2020
-
-# Entry point
-CMD /entrypoint.sh
