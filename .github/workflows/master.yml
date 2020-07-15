@@ -45,6 +45,11 @@ jobs:
         run: |
           docker build -f ssm/Dockerfile -t $ECR_REGISTRY/ssm-agent:$GITHUB_REF_SLUG-$GITHUB_SHA_SHORT ssm/
           docker push $ECR_REGISTRY/ssm-agent:$GITHUB_REF_SLUG-$GITHUB_SHA_SHORT
+      - name: Fluentbit
+        if: contains(env.SERVICES,'fluentbit')
+        run: |
+          docker build -f fluentbit/Dockerfile -t $ECR_REGISTRY/fluentbit:$GITHUB_REF_SLUG-$GITHUB_SHA_SHORT fluentbit/
+          docker push $ECR_REGISTRY/fluentbit:$GITHUB_REF_SLUG-$GITHUB_SHA_SHORT
       - name: Logout of Amazon ECR
         if: always()
         run: docker logout $ECR_REGISTRY

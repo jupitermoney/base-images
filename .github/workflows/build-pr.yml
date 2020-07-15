@@ -43,6 +43,10 @@ jobs:
         if: contains(env.SERVICES,'ssm')
         run: |
           docker build -f ssm/Dockerfile -t $ECR_REGISTRY/ssm-agent:$GITHUB_REF_SLUG-$GITHUB_SHA_SHORT ssm/
+      - name: Fluentbit
+        if: contains(env.SERVICES,'fluentbit')
+        run: |
+          docker build -f fluentbit/Dockerfile -t $ECR_REGISTRY/fluentbit:$GITHUB_REF_SLUG-$GITHUB_SHA_SHORT fluentbit/
       - name: Logout of Amazon ECR
         if: always()
         run: docker logout $ECR_REGISTRY
