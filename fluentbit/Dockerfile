@@ -33,5 +33,5 @@ COPY --from=builder /go/src/app/out_coralogix.so /fluent-bit/plugins/
 # COPY --from=builder /lib/libc.musl-x86_64.so* /lib64/
 # COPY --from=builder /go/src/app/out_coralogix.so /fluent-bit/
 
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+# COPY entrypoint.sh /entrypoint.sh
+# RUN chmod +x /entrypoint.sh
