@@ -50,6 +50,11 @@ jobs:
         run: |
           docker build -f fluentbit/Dockerfile -t $ECR_REGISTRY/fluentbit:$GITHUB_REF_SLUG-$GITHUB_SHA_SHORT fluentbit/
           docker push $ECR_REGISTRY/fluentbit:$GITHUB_REF_SLUG-$GITHUB_SHA_SHORT
+      - name: Github-Runner
+        if: contains(env.SERVICES,'github-runner')
+        run: |
+          docker build -f github-runner/Dockerfile -t $ECR_REGISTRY/github-runner:$GITHUB_REF_SLUG-$GITHUB_SHA_SHORT github-runner/
+          docker push $ECR_REGISTRY/github-runner:$GITHUB_REF_SLUG-$GITHUB_SHA_SHORT
       - name: Logout of Amazon ECR
         if: always()
         run: docker logout $ECR_REGISTRY
