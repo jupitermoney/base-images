@@ -1,4 +1,4 @@
-#version 0.1
+#version 0.2
 FROM debian:buster
 
 ENV GITHUB_PERSONAL_TOKEN ""
