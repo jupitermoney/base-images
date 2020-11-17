@@ -12,6 +12,7 @@ jobs:
 
     env:
       ECR_REGISTRY: 351409330128.dkr.ecr.ap-south-1.amazonaws.com
+      ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 
     steps:
       - uses: actions/checkout@v2
