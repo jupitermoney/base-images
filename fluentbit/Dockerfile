@@ -10,7 +10,7 @@ RUN wget -q https://raw.githubusercontent.com/coralogix/integrations-docs/master
     go mod vendor && \
     go build -buildmode=c-shared -ldflags "-s -w" -mod=vendor -o out_coralogix.so .
 
-FROM amazon/aws-for-fluent-bit:2.10.0
+FROM amazon/aws-for-fluent-bit:2.7.0
 COPY --from=builder /lib/libc.musl-x86_64.so* /lib64/
 COPY --from=builder /go/src/app/out_coralogix.so /fluent-bit/
 
